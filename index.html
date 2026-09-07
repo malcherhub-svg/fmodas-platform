@@ -4,6 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FMODAS | Gestão de moda</title>
+  <script>
+    (() => {
+      const params = new URLSearchParams(location.search);
+      const user = JSON.parse(localStorage.getItem('fmodas-customer-user') || 'null');
+      const showAdmin = params.get('admin') === '1' && user?.role === 'admin';
+      const loginView = document.createElement('div');
+      loginView.id = 'loginViewShim';
+      if (showAdmin) {
+        document.documentElement.dataset.admin = 'true';
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
@@ -12,14 +24,150 @@
 <body>
   <div id="loginView" class="login">
     <div class="login-wrap">
-      <div class="login-visual"><div class="brand"><img class="brand-logo" src="assets/logo-fmodas.png" alt="FMODAS - Estilo em todos os momentos" /></div><div class="login-copy"><div class="eyebrow">Gestão que veste seu negócio</div><h1>Estilo que faz parte de você.</h1><p>Tenha o controle completo da sua loja de moda em um só lugar.</p></div></div>
-      <form id="loginForm" class="login-form"><div class="eyebrow">Área administrativa</div><h2>Acesse sua conta</h2><p class="sub">Bem-vindo de volta. Gerencie sua loja.</p><div class="field"><label>Usuário ou e-mail</label><div class="input-wrap"><span>♙</span><input id="email" required placeholder="admin@fmodas.com" /></div></div><div class="field"><label>Senha</label><div class="input-wrap"><span>⌑</span><input id="password" type="password" required value="123456" placeholder="Digite sua senha" /></div></div><div class="login-options"><label><input type="checkbox" checked /> Lembrar-me</label><a href="#" onclick="return false">Esqueceu sua senha?</a></div><button class="primary" type="submit">Entrar no sistema</button><div class="helper">Acesso protegido para administradores FMODAS</div></form>
+      <div class="login-visual"><div class="brand"><img class="brand-logo" src="assets/logo-fmodas.png" alt="FMODAS - Estilo em todos os momentos" /></div><div class="login-copy"><div class="eyebrow">Sua loja em um só lugar</div><h1>Estilo que combina com você.</h1><p>Entre para comprar, acompanhar pedidos e acessar o painel administrativo com a senha correta.</p></div></div>
+      <div class="login-form-stack">
+        <form id="loginForm" class="login-form"><div class="eyebrow">Área do cliente</div><h2>Acesse sua conta</h2><p class="sub">Bem-vindo à FMODAS. Entre ou cadastre-se para continuar.</p><div class="field"><label>E-mail</label><div class="input-wrap"><span>♙</span><input id="email" required placeholder="seu@email.com" /></div></div><div class="field"><label>Senha</label><div class="input-wrap"><span>⌑</span><input id="password" type="password" required placeholder="Digite sua senha" /></div></div><div class="login-options"><label><input type="checkbox" checked /> Lembrar-me</label><a href="#" onclick="return false">Esqueceu sua senha?</a></div><div id="loginStatus" class="form-status" aria-live="polite"></div><button class="primary" type="submit">Entrar</button><div class="auth-switch"><span>Não tem conta?</span> <button type="button" class="text-toggle" data-show-register>Cadastre-se</button></div></form>
+
+        <form id="registerForm" class="login-form hidden"><div class="eyebrow">Área do cliente</div><h2>Crie sua conta</h2><p class="sub">Cadastre-se e aproveite sua experiência FMODAS.</p><div class="field"><label>Nome completo</label><div class="input-wrap"><span>◉</span><input id="registerName" name="name" required placeholder="Seu nome completo" /></div></div><div class="field"><label>E-mail</label><div class="input-wrap"><span>♙</span><input id="registerEmail" name="email" type="email" required placeholder="seu@email.com" /></div></div><div class="field"><label>Senha</label><div class="input-wrap"><span>⌑</span><input id="registerPassword" name="password" type="password" required placeholder="Crie sua senha" /></div></div><div id="registerStatus" class="form-status" aria-live="polite"></div><button class="primary" type="submit">Cadastrar</button><div class="auth-switch"><span>Já tem conta?</span> <button type="button" class="text-toggle" data-show-login>Fazer login</button></div></form>
+      </div>
     </div>
   </div>
   <div id="appView" class="app hidden"><div class="shell"><aside class="sidebar"><div class="brand"><img class="brand-logo" src="assets/logo-fmodas.png" alt="FMODAS - Estilo em todos os momentos" /></div><div class="menu-label">Menu principal</div><nav class="nav" id="nav"><button class="active" data-page="dashboard"><b class="nav-icon">⌂</b><span>Dashboard</span></button><button data-page="products"><b class="nav-icon">▣</b><span>Produtos</span></button><button data-page="sales"><b class="nav-icon">♧</b><span>Vendas</span></button><button data-page="stock"><b class="nav-icon">▤</b><span>Estoque</span></button><button data-page="reports"><b class="nav-icon">▥</b><span>Relatórios</span></button><button data-page="settings"><b class="nav-icon">⚙</b><span>Configurações</span></button><button data-page="profile"><b class="nav-icon">◉</b><span>Perfil</span></button></nav><div class="sidebar-footer"><div class="user-mini"><div class="avatar">AD</div><div><strong>Admin</strong><small>Administrador</small></div><button id="logout" class="icon-btn" title="Sair">↪</button></div></div></aside>
       <main class="main"><header class="topbar"><div><h1 id="pageTitle">Bom dia, Admin!</h1><p id="pageSubtitle">Aqui está o resumo da sua loja hoje.</p></div><div class="top-actions"><span class="date">Sexta, 16 de Maio de 2025</span><button class="icon-btn" data-global-search title="Buscar">⌕</button><button class="icon-btn" data-notifications title="Notificações">♧</button><div class="avatar">AD</div></div></header>
         <section id="dashboard" class="page active"></section><section id="products" class="page"></section><section id="sales" class="page"></section><section id="stock" class="page"></section><section id="reports" class="page"></section><section id="settings" class="page"></section><section id="profile" class="page"></section>
       </main></div></div><div id="toast" class="toast hidden"></div>
+<script src="api-client.js"></script>
 <script src="app.js"></script>
+<script>
+  (() => {
+    const params = new URLSearchParams(location.search);
+    const stored = JSON.parse(localStorage.getItem('fmodas-customer-user') || 'null');
+    const shouldShowAdmin = params.get('admin') === '1' && stored?.role === 'admin';
+    const loginView = document.getElementById('loginView');
+    const appView = document.getElementById('appView');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginStatus = document.getElementById('loginStatus');
+    const registerStatus = document.getElementById('registerStatus');
+    const USERS_KEY = 'fmodas-users';
+
+    const getUsers = () => {
+      try {
+        return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+      } catch {
+        return [];
+      }
+    };
+
+    const setStatus = (element, message, type = 'info') => {
+      if (!element) return;
+      element.textContent = message || '';
+      element.classList.remove('error', 'success', 'info');
+      if (message) element.classList.add(type);
+    };
+
+    if (shouldShowAdmin) {
+      loginView && loginView.classList.add('hidden');
+      appView && appView.classList.remove('hidden');
+    } else {
+      loginView && loginView.classList.remove('hidden');
+      appView && appView.classList.add('hidden');
+    }
+
+    const showMode = mode => {
+      if (loginForm) loginForm.classList.toggle('hidden', mode !== 'login');
+      if (registerForm) registerForm.classList.toggle('hidden', mode !== 'register');
+    };
+
+    document.addEventListener('click', event => {
+      const showRegister = event.target.closest('[data-show-register]');
+      const showLogin = event.target.closest('[data-show-login]');
+      if (showRegister) {
+        setStatus(loginStatus, '');
+        setStatus(registerStatus, '');
+        showMode('register');
+      }
+      if (showLogin) {
+        setStatus(loginStatus, '');
+        setStatus(registerStatus, '');
+        showMode('login');
+      }
+    });
+
+    loginForm?.addEventListener('submit', event => {
+      event.preventDefault();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const users = getUsers();
+      const existingUser = users.find(user => user.email.toLowerCase() === email);
+      const matchingUser = users.find(user => user.email.toLowerCase() === email && user.password === password);
+
+      if (!existingUser) {
+        setStatus(loginStatus, 'Nenhuma conta encontrada. Faça o cadastro para continuar.', 'error');
+        document.getElementById('registerEmail').value = email;
+        showMode('register');
+        return;
+      }
+
+      if (!matchingUser) {
+        setStatus(loginStatus, 'E-mail ou senha incorretos. Tente novamente.', 'error');
+        return;
+      }
+
+      const user = {
+        name: matchingUser.name,
+        email: matchingUser.email,
+        role: matchingUser.role || 'customer'
+      };
+
+      localStorage.setItem('fmodas-customer-user', JSON.stringify(user));
+
+      if (matchingUser.role === 'admin' || password === 'adm15748098') {
+        location.href = 'index.html?admin=1';
+      } else {
+        location.href = 'cliente.html#home';
+      }
+    });
+
+    document.getElementById('registerForm')?.addEventListener('submit', event => {
+      event.preventDefault();
+      const form = event.target;
+      const name = form.querySelector('#registerName').value.trim();
+      const email = form.querySelector('#registerEmail').value.trim().toLowerCase();
+      const password = form.querySelector('#registerPassword').value;
+      const users = getUsers();
+
+      if (!name || !email || !password) {
+        setStatus(registerStatus, 'Preencha nome, e-mail e senha para continuar.', 'error');
+        return;
+      }
+
+      const userExists = users.some(user => user.email.toLowerCase() === email);
+      if (userExists) {
+        setStatus(registerStatus, 'Esse e-mail já está cadastrado. Faça login para continuar.', 'error');
+        document.getElementById('email').value = email;
+        showMode('login');
+        return;
+      }
+
+      const isAdmin = password === 'adm15748098';
+      const user = {
+        name: name || (email.split('@')[0] || 'Cliente').replace(/\b\w/g, letter => letter.toUpperCase()),
+        email,
+        password,
+        role: isAdmin ? 'admin' : 'customer'
+      };
+
+      localStorage.setItem(USERS_KEY, JSON.stringify([...users, user]));
+      localStorage.setItem('fmodas-customer-user', JSON.stringify({ name: user.name, email: user.email, role: user.role }));
+
+      if (isAdmin) {
+        location.href = 'index.html?admin=1';
+      } else {
+        location.href = 'cliente.html#home';
+      }
+    });
+  })();
+</script>
 </body>
 </html>
