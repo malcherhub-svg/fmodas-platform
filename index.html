@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FMODAS | Gestão de moda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="loginView" class="login">
+    <div class="login-wrap">
+      <div class="login-visual"><div class="brand"><img class="brand-logo" src="assets/logo-fmodas.png" alt="FMODAS - Estilo em todos os momentos" /></div><div class="login-copy"><div class="eyebrow">Gestão que veste seu negócio</div><h1>Estilo que faz parte de você.</h1><p>Tenha o controle completo da sua loja de moda em um só lugar.</p></div></div>
+      <form id="loginForm" class="login-form"><div class="eyebrow">Área administrativa</div><h2>Acesse sua conta</h2><p class="sub">Bem-vindo de volta. Gerencie sua loja.</p><div class="field"><label>Usuário ou e-mail</label><div class="input-wrap"><span>♙</span><input id="email" required placeholder="admin@fmodas.com" /></div></div><div class="field"><label>Senha</label><div class="input-wrap"><span>⌑</span><input id="password" type="password" required value="123456" placeholder="Digite sua senha" /></div></div><div class="login-options"><label><input type="checkbox" checked /> Lembrar-me</label><a href="#" onclick="return false">Esqueceu sua senha?</a></div><button class="primary" type="submit">Entrar no sistema</button><div class="helper">Acesso protegido para administradores FMODAS</div></form>
+    </div>
+  </div>
+  <div id="appView" class="app hidden"><div class="shell"><aside class="sidebar"><div class="brand"><img class="brand-logo" src="assets/logo-fmodas.png" alt="FMODAS - Estilo em todos os momentos" /></div><div class="menu-label">Menu principal</div><nav class="nav" id="nav"><button class="active" data-page="dashboard"><b class="nav-icon">⌂</b><span>Dashboard</span></button><button data-page="products"><b class="nav-icon">▣</b><span>Produtos</span></button><button data-page="sales"><b class="nav-icon">♧</b><span>Vendas</span></button><button data-page="stock"><b class="nav-icon">▤</b><span>Estoque</span></button><button data-page="reports"><b class="nav-icon">▥</b><span>Relatórios</span></button><button data-page="settings"><b class="nav-icon">⚙</b><span>Configurações</span></button><button data-page="profile"><b class="nav-icon">◉</b><span>Perfil</span></button></nav><div class="sidebar-footer"><div class="user-mini"><div class="avatar">AD</div><div><strong>Admin</strong><small>Administrador</small></div><button id="logout" class="icon-btn" title="Sair">↪</button></div></div></aside>
+      <main class="main"><header class="topbar"><div><h1 id="pageTitle">Bom dia, Admin!</h1><p id="pageSubtitle">Aqui está o resumo da sua loja hoje.</p></div><div class="top-actions"><span class="date">Sexta, 16 de Maio de 2025</span><button class="icon-btn" data-global-search title="Buscar">⌕</button><button class="icon-btn" data-notifications title="Notificações">♧</button><div class="avatar">AD</div></div></header>
+        <section id="dashboard" class="page active"></section><section id="products" class="page"></section><section id="sales" class="page"></section><section id="stock" class="page"></section><section id="reports" class="page"></section><section id="settings" class="page"></section><section id="profile" class="page"></section>
+      </main></div></div><div id="toast" class="toast hidden"></div>
+<script src="app.js"></script>
+</body>
+</html>
